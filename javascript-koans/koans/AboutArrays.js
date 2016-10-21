@@ -6,9 +6,9 @@ describe("About Arrays", function() {
     expect(typeof(emptyArray)).toBe('object'); //A mistake? - http://javascript.crockford.com/remedial.html
     expect(emptyArray.length).toBe(0);
 
-    var multiTypeArray = [0, 1, 2, function () { return 3; }, {value1: 4, value2: 5}, [6, 7]];
+    var multiTypeArray = [0, 1, "two", function () { return 3; }, {value1: 4, value2: 5}, [6, 7]];
     expect(multiTypeArray[0]).toBe(0);
-    expect(multiTypeArray[2]).toBe(2);
+    expect(multiTypeArray[2]).toBe("two");
     expect(multiTypeArray[3]()).toBe(3);
     expect(multiTypeArray[4].value1).toBe(4);
     expect(multiTypeArray[4]["value2"]).toBe(5);
@@ -26,7 +26,7 @@ describe("About Arrays", function() {
     expect(array).toEqual([1, 2]);
 
     array.push(3);
-    expect(1).toEqual(1);
+    expect(array).toEqual([1, 2, 3]);
   });
 
   it("should understand array length", function () {
@@ -59,14 +59,14 @@ describe("About Arrays", function() {
     var array = [ "zero", "one", "two", "three", "four", "five" ];
 
     function passedByReference(refArray) {
-        refArray[1] = 'Fill this value in';
+        refArray[1] = "changed in function";
     }
     passedByReference(array);
-    expect(array[1]).toBe(FILL_ME_IN);
+    expect(array[1]).toBe("changed in function");
 
     var assignedArray = array;
-    assignedArray[5] = 'Fill this value in';
-    expect(array[5]).toBe(FILL_ME_IN);
+    assignedArray[5] = "changed in assignedArray";
+    expect(array[5]).toBe("changed in assignedArray");
 
     var copyOfArray = array.slice();
     copyOfArray[3] = "changed in copyOfArray";

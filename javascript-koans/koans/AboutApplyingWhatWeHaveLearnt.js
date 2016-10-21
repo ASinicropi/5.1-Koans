@@ -13,9 +13,7 @@ describe("About Applying What We Have Learnt", function() {
        { name: "Taste Of Athens", ingredients: ["spinach", "kalamata olives", "sesame seeds"], containsNuts: true }
     ];
   });
-
   /*********************************************************************************/
-
   it("given I'm allergic to nuts and hate mushrooms, it should find a pizza I can eat (imperative)", function () {
 
     var i,j,hasMushrooms, productsICanEat = [];
@@ -40,10 +38,12 @@ describe("About Applying What We Have Learnt", function() {
       var productsICanEat = [];
 
       /* solve using filter() & all() / any() */
-
-      expect(productsICanEat.length).toBe(0);
+      var filterPizza = products.filter(function(pizza){
+        return pizza["containsNuts"] == false || pizza["ingredients"].includes("mushrooms") !== true;
+      });
+      productsICanEat.push(filterPizza);
+      expect(productsICanEat.length).toBe(1);
   });
-
   /*********************************************************************************/
 
   it("should add all the natural numbers below 1000 that are multiples of 3 or 5 (imperative)", function () {
@@ -60,11 +60,23 @@ describe("About Applying What We Have Learnt", function() {
 
   it("should add all the natural numbers below 1000 that are multiples of 3 or 5 (functional)", function () {
 
-    var sum = FILL_ME_IN;    /* try chaining range() and reduce() */
-
-    expect(233168).toBe(233168);
+    var sum = 0;
+ /* try chaining range() and reduce() */
+    var arrayOfValues=[];
+    var numRange = _.range(1, 1001, 1);
+    for(var i = 0; i < numRange.length; i++){
+      if(i % 3 === 0 || i % 5 === 0){
+        arrayOfValues.push(i);
+      }
+      console.log(arrayOfValues);
+      return arrayOfValues;
+    }
+    var reduction = arrayOfValues.reduce(function(previousNum, currentNum){
+      return previousNum + currentNum;
+    });
+    sum = reduction;
+    expect(233168).toBe(sum);
   });
-
   /*********************************************************************************/
    it("should count the ingredient occurrence (imperative)", function () {
     var ingredientCount = { "{ingredient name}": 0 };
@@ -82,10 +94,18 @@ describe("About Applying What We Have Learnt", function() {
     var ingredientCount = { "{ingredient name}": 0 };
 
     /* chain() together map(), flatten() and reduce() */
+    var numOfShrooms = _.chain(products)
+                      .map(function(pizzas){
+                        return pizza.ingredients
+                      })
+                      .flatten()
+                      .reduce(function(ingredientObject, ingredient){
+                        return ingredientCount[ingredient]= (ingredientCount[ingredient] || 0) +1;
+                      })
+                      console.log(ingredientCount);
 
-    expect(ingredientCount['mushrooms']).toBe(undefined);
-  });
-
+                      expect(ingredientCount['mushrooms']).toBe(undefined);
+                    });
   /*********************************************************************************/
   /* UNCOMMENT FOR EXTRA CREDIT */
   /*
